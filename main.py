@@ -19,11 +19,11 @@ class State:
 				else:
 					response = self.platform.login_user(user_name, password)
 					if response:
-						user = User(user_name)
+						user = User(user_name, password)
 						response = input("Do you wish to enter new data or view your own decrypted data? (Y/N)")
 						if response.lower()=="y":
 							user.instance()
-						user.decrypt_user_data()
+						user.browse()
 					else:
 						print("Invalid Login Details...")
 						return 0

@@ -1,4 +1,5 @@
-from Crypto.Cipher import AES
+from Crypto.Cipher import AES, PKCS1_OAEP
+from Crypto.PublicKey import RSA
 from Crypto.Random import get_random_bytes
 import random
 import pickle
@@ -6,7 +7,8 @@ import os
 
 
 class Platform:
-	def __init__(self, platform_storage="./.platform/", public_storage="./data/", user_pass_file="./data/user_pass.dat"):
+	def __init__(self, platform_storage="./.platform/", public_storage="./data/", sess_id="./data/sess.dat", user_pass_file="./data/user_pass.dat"):
+		self.sess_id = sess_id
 		self.user_pass_file = user_pass_file
 		self.platform_storage = platform_storage
 		self.public_storage = public_storage
@@ -15,6 +17,22 @@ class Platform:
 		self.init_platform_keys()
 		self.aes = AES.new(self.platform_platform_key, AES.MODE_ECB)
 		self.user_pass = self.read_user_pass()
+
+	def send_session_key(self, username, session_key):
+		with open("./.platform/authority_public.key", "rb") as f:
+			public_key = RSA.import_key(f.read())
+		cipher_rsa = PKCS1_OAEP.new(public_key)
+		enc_session_key = cipher_rsa.encrypt(session_key)
+		if not os.path.exists(self.sess_id):
+			data = {username: enc_session_key}
+			with open(self.sess_id, "wb") as f:
+				pickle.dump(data, f)
+		with open(self.sess_id, "rb") as f:
+			data = pickle.load(f)
+		if username not in data.keys():
+			data.update({username: enc_session_key})
+			with open(self.sess_id, "wb") as f:
+				pickle.dump(data, f)
 
 	def init_platform_keys(self):
 		if not os.path.exists(self.platform_storage+"platform.key"):
