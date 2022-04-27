@@ -81,8 +81,8 @@ class User:
 			data_arr = []
 			with open(path, "rb") as f:
 				dat_savable = pickle.load(f)
-				random.seed(sum([ord(i) for i in self.username]))
 				for query in dat_savable:
+					random.seed(sum([ord(i) for i in self.username]))
 					data = query["data"]
 					encrypted_words = query["encrypted_words"]
 					for encrypted_word in encrypted_words:
