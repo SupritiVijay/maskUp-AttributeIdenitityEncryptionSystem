@@ -19,6 +19,13 @@ However, one must understand that information relayed on topics as volatile as S
 
 ## Our Pipeline: 
 
+Our pipeline:
+ 
+* Extracts sensitive phrases/words from given paragraph/post/tweet (further referred to as a document).
+* Enables Continual Learning using $EWC$ paradigm for targeted neuron training.
+* Selectively encrypts only those aspects of the document which may be sensitive to the users (such as names, locations, organizations, among others.).
+* Provides a mechanism for criminal authorities to decrypt all user data (Master-Key Module).
+
 ![Pipeline](./images/pipeline.png)
 
 ## Example:
