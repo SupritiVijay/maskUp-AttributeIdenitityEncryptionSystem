@@ -32,7 +32,9 @@ Our pipeline:
 
 ![Example](./images/eg.png)
 
-## Cite This Work
+## [Cite This Work](https://arxiv.org/abs/2211.08653)
+
+[Link to Manuscript](https://arxiv.org/abs/2211.08653)
 
 ```
 @misc{https://doi.org/10.48550/arxiv.2211.08653,
@@ -45,6 +47,4 @@ Our pipeline:
   year = {2022},
   copyright = {Creative Commons Attribution 4.0 International}
 }
-
-
 ``` 
